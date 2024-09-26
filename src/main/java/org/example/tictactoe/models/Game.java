@@ -45,11 +45,26 @@ public class Game {
     }
 
     public void play(){
-        displayBoard();
         gameState = GameState.IN_PROGRESS;
 
         while(gameState != GameState.IN_PROGRESS){
+            displayBoard();
+
             // keep taking player choices
+            Player currentPlayer = players.get(currentPlayerIndex);
+            Move move = currentPlayer.makeMove(board);
+
+            for(WinningStrategy strategy : winningStrategies){
+                strategy.updateCounter(move);
+            }
+
+            if(checkIfPlayerHasWon(board, move)){
+                gameState = GameState.COMPLETED;
+                winner = currentPlayer;
+                break;
+            }
+
+            currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
         }
 
         if(gameState == GameState.COMPLETED){
@@ -58,6 +73,15 @@ public class Game {
         if(gameState == GameState.DRAW){
             System.out.println("Game is a Draw!");
         }
+    }
+
+    private boolean checkIfPlayerHasWon(Board board, Move lastMove){
+        for(WinningStrategy strategy : winningStrategies){
+            if(strategy.checkWinner(board, lastMove)){
+                return true;
+            }
+        }
+        return false;
     }
 
     // the game says, you want to get a Game object

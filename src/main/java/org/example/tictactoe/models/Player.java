@@ -18,6 +18,12 @@ public class Player {
         this.playerType = PlayerType.HUMAN;
     }
 
+
+    // given this board, make the move.
+    public Move makeMove(Board board){
+        return null;
+    }
+
     public int getId() {
         return id;
     }

@@ -9,4 +9,8 @@ public class CornersWinningStrategy implements WinningStrategy{
         // check all 4 corners
         return false;
     }
+
+    public void updateCounter(Move move){
+
+    }
 }

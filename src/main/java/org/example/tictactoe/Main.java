@@ -6,6 +6,8 @@ import org.example.backup.tictactoe.models.exceptions.DuplicateSymbolException;
 import org.example.backup.tictactoe.models.exceptions.PlayerCountException;
 import org.example.tictactoe.enums.BotDifficultyLevel;
 import org.example.tictactoe.models.*;
+import org.example.tictactoe.winningStrategies.ColumnWinningStrategy;
+import org.example.tictactoe.winningStrategies.DiagonalWinningStrategy;
 import org.example.tictactoe.winningStrategies.RowWinningStrategy;
 import org.example.tictactoe.winningStrategies.WinningStrategy;
 
@@ -22,17 +24,19 @@ public class Main {
 
         int boardSize = 3;
 
-        List<Player> players1 = new ArrayList<>();
-        players1.add(new Player(1, "Saharsh", new Symbol('X')));
-        players1.add(new Player(2, "Navdeep", new Symbol('O')));
+        List<Player> players = new ArrayList<>();
+        players.add(new Player(1, "Saharsh", new Symbol('X')));
+        players.add(new Player(2, "Navdeep", new Symbol('O')));
 
 
         List<WinningStrategy> winningStrategies = new ArrayList<>();
-        winningStrategies.add(new RowWinningStrategy());
+        winningStrategies.add(new RowWinningStrategy(boardSize, players));
+        winningStrategies.add(new ColumnWinningStrategy(boardSize, players));
+        winningStrategies.add(new DiagonalWinningStrategy(boardSize, players));
 
         Game game = Game.getbuilder()
                         .setBoardSize(boardSize)
-                        .setPlayers(players1)
+                        .setPlayers(players)
                         .setWinningStrategies(winningStrategies)
                         .build();
         game.play();
@@ -57,7 +61,10 @@ public class Main {
 // how to implement TicTacToe
 // basic structure
 // Game Builder
+
+// how to actually play a game
 // Bot difficulties
 // Winning Strategies
 // undo feature.
+
 // keep the class till 9:30.
