@@ -26,7 +26,7 @@ public class Main {
 
         List<Player> players = new ArrayList<>();
         players.add(new Player(1, "Saharsh", new Symbol('X')));
-        players.add(new Player(2, "Navdeep", new Symbol('O')));
+        players.add(new Bot(2, "Bot", new Symbol('B'), BotDifficultyLevel.MEDIUM));
 
 
         List<WinningStrategy> winningStrategies = new ArrayList<>();
@@ -40,14 +40,6 @@ public class Main {
                         .setWinningStrategies(winningStrategies)
                         .build();
         game.play();
-
-
-        System.out.println("DEBUG");
-
-//        Game g1 = new Game(3, players1, winningStrategies);
-//        Game g2 = new Game(5, players2, winningStrategies);
-
-
     }
 }
 

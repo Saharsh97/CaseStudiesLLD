@@ -45,4 +45,18 @@ public class RowWinningStrategy implements WinningStrategy{
         int newCount = existingCount + 1;
         countMap.get(row).put(player, newCount);
     }
+
+    @Override
+    public void decrementCounter(Move move) {
+        Cell cell = move.getCell();
+        Player player = move.getPlayer();
+
+        int row = cell.getRow();
+
+        int existingCount = countMap.get(row).get(player);
+        int newCount = existingCount - 1;
+        countMap.get(row).put(player, newCount);
+    }
+
+
 }

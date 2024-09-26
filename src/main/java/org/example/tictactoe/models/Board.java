@@ -4,6 +4,7 @@ import org.example.tictactoe.enums.CellState;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Board {
     private int size;   // N
@@ -23,6 +24,42 @@ public class Board {
             }
             board.add(rowsOfCells);
         }
+    }
+
+    public Cell getCell(int row, int col){
+        return board.get(row).get(col);
+    }
+
+    public void updateCell(int row, int col, Player player){
+        Cell cell = board.get(row).get(col);
+        cell.update(player);
+    }
+
+    public Cell getFirstEmptyCell(){
+        for(int i = 0; i < size; i++){
+            for(int j = 0; j < size; j++){
+                Cell cell = getCell(i, j);
+                if(cell.getCellState() == CellState.EMPTY){
+                    return cell;
+                }
+            }
+        }
+        return null;
+    }
+
+    public Cell getRandomEmptyCell(){
+        List<Cell> emptyCells = new ArrayList<>();
+        for(int i = 0; i < size; i++){
+            for(int j = 0; j < size; j++){
+                Cell cell = getCell(i, j);
+                if(cell.getCellState() == CellState.EMPTY){
+                   emptyCells.add(cell);
+                }
+            }
+        }
+
+        int index = new Random().nextInt(emptyCells.size());
+        return emptyCells.get(index);
     }
 
     public void displayBoard(){

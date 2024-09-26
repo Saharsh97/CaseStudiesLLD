@@ -13,4 +13,9 @@ public class CornersWinningStrategy implements WinningStrategy{
     public void updateCounter(Move move){
 
     }
+
+    @Override
+    public void decrementCounter(Move move) {
+
+    }
 }

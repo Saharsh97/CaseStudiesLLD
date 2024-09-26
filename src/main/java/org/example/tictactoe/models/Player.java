@@ -2,7 +2,10 @@ package org.example.tictactoe.models;
 
 
 
+import org.example.tictactoe.enums.CellState;
 import org.example.tictactoe.enums.PlayerType;
+
+import java.util.Scanner;
 
 
 public class Player {
@@ -21,7 +24,46 @@ public class Player {
 
     // given this board, make the move.
     public Move makeMove(Board board){
-        return null;
+        System.out.println("Its " + this.name + "'s turn now");
+        int row, column;
+
+        while(true) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter Row");
+            row = scanner.nextInt();
+
+            System.out.println("Enter Column");
+            column = scanner.nextInt();
+
+            // validate the inputs
+            // till the time inputs are not correct, repeat
+            // once correct inputs given, break the loop
+
+            if(validateInputs(board, row, column)){
+                break;
+            }
+        }
+
+        // board is updated
+        board.updateCell(row, column, this);
+
+        Move move = new Move(board.getCell(row, column), this);
+        return move;
+    }
+
+    private boolean validateInputs(Board board, int row, int column) {
+        if(row < 0 || row >= board.getSize() || column < 0 || column >= board.getSize()){
+            System.out.println("Please give inputs within boundary");
+            return false;
+        }
+
+        Cell cell = board.getCell(row, column);
+        if(cell.getCellState() == CellState.FILLED){
+            System.out.println("Please enter position of empty cell");
+            return false;
+        }
+
+        return true;
     }
 
     public int getId() {

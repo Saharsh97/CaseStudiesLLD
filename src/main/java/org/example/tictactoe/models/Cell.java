@@ -15,6 +15,16 @@ public class Cell {
         this.cellState = CellState.EMPTY;
     }
 
+    public void update(Player player){
+        this.cellState = CellState.FILLED;
+        this.player = player;
+    }
+
+    public void clear(){
+        this.cellState = CellState.EMPTY;
+        this.player = null;
+    }
+
     public int getRow() {
         return row;
     }

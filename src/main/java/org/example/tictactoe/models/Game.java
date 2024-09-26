@@ -5,21 +5,19 @@ import org.example.backup.tictactoe.models.exceptions.DimensionException;
 import org.example.backup.tictactoe.models.exceptions.DuplicateSymbolException;
 import org.example.backup.tictactoe.models.exceptions.PlayerCountException;
 import org.example.backup.tictactoe.models.exceptions.BotCountException;
+import org.example.tictactoe.enums.CellState;
 import org.example.tictactoe.enums.GameState;
 import org.example.tictactoe.enums.PlayerType;
 import org.example.tictactoe.winningStrategies.WinningStrategy;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 public class Game {
     private Board board;
     private List<Player> players;
     private GameState gameState;
-    private List<Move> moves;   // this is used for undo feature
+    private List<Move> movesList;   // this is used for undo feature
     private int currentPlayerIndex;
     private Player winner;  // after game completes, you have a winner;
     private List<WinningStrategy> winningStrategies;
@@ -35,7 +33,7 @@ public class Game {
         this.winningStrategies = builder.winningStrategies;
 
         this.gameState = GameState.NOT_STARTED;
-        this.moves = new ArrayList<>();
+        this.movesList = new ArrayList<>();
         this.currentPlayerIndex = 0;
         this.winner = null;
     }
@@ -46,13 +44,13 @@ public class Game {
 
     public void play(){
         gameState = GameState.IN_PROGRESS;
-
-        while(gameState != GameState.IN_PROGRESS){
-            displayBoard();
-
+        displayBoard();
+        while(gameState != GameState.COMPLETED || gameState != GameState.DRAW){
             // keep taking player choices
             Player currentPlayer = players.get(currentPlayerIndex);
             Move move = currentPlayer.makeMove(board);
+            movesList.add(move);
+            displayBoard();
 
             for(WinningStrategy strategy : winningStrategies){
                 strategy.updateCounter(move);
@@ -64,9 +62,12 @@ public class Game {
                 break;
             }
 
+            checkForUndo(currentPlayer, move);
+
             currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
         }
 
+        displayBoard();
         if(gameState == GameState.COMPLETED){
             System.out.println("Winner is " + winner.getName());
         }
@@ -82,6 +83,33 @@ public class Game {
             }
         }
         return false;
+    }
+
+    public void checkForUndo(Player player, Move move){
+        if(player.getPlayerType() == PlayerType.BOT){
+            return;
+        }
+        System.out.println("Do you want to undo ");
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        if(input.equalsIgnoreCase("y")){
+            performUndo(player, move);
+        }
+    }
+
+    public void performUndo(Player player, Move move){
+        Cell cell = move.getCell();
+        cell.clear();
+
+        for(WinningStrategy strategy : winningStrategies){
+            strategy.decrementCounter(move);
+        }
+
+        movesList.remove(movesList.size()-1);
+
+        displayBoard();
+        player.makeMove(board);
+        movesList.add(move);
     }
 
     // the game says, you want to get a Game object

@@ -65,4 +65,24 @@ public class DiagonalWinningStrategy implements WinningStrategy{
             countMap.get(1).put(player, newCount);
         }
     }
+
+    @Override
+    public void decrementCounter(Move move) {
+        Cell cell = move.getCell();
+        Player player = move.getPlayer();
+
+        int row = cell.getRow();
+        int col = cell.getColumn();
+
+        if(row == col){
+            int existingCount = countMap.get(0).get(player);
+            int newCount = existingCount - 1;
+            countMap.get(0).put(player, newCount);
+        }
+        if(row + col == boardSize - 1){
+            int existingCount = countMap.get(1).get(player);
+            int newCount = existingCount - 1;
+            countMap.get(1).put(player, newCount);
+        }
+    }
 }
