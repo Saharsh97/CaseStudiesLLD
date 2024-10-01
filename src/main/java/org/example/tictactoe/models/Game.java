@@ -1,13 +1,12 @@
 package org.example.tictactoe.models;
 
-import org.example.backup.tictactoe.models.Symbol;
-import org.example.backup.tictactoe.models.exceptions.DimensionException;
-import org.example.backup.tictactoe.models.exceptions.DuplicateSymbolException;
-import org.example.backup.tictactoe.models.exceptions.PlayerCountException;
-import org.example.backup.tictactoe.models.exceptions.BotCountException;
 import org.example.tictactoe.enums.CellState;
 import org.example.tictactoe.enums.GameState;
 import org.example.tictactoe.enums.PlayerType;
+import org.example.tictactoe.exceptions.BotCountException;
+import org.example.tictactoe.exceptions.DimensionException;
+import org.example.tictactoe.exceptions.DuplicateSymbolException;
+import org.example.tictactoe.exceptions.PlayerCountException;
 import org.example.tictactoe.winningStrategies.WinningStrategy;
 
 import java.util.*;
@@ -63,7 +62,6 @@ public class Game {
             }
 
             checkForUndo(currentPlayer, move);
-
             currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
         }
 
@@ -154,7 +152,7 @@ public class Game {
             }
         }
 
-        private void checkUniqueSymbols() throws DuplicateSymbolException{
+        private void checkUniqueSymbols() throws DuplicateSymbolException {
             Set<Character> uniqueSymbols = new HashSet<>();
             for(Player player : players){
                 if(uniqueSymbols.contains(player.getSymbol().getaChar())){
