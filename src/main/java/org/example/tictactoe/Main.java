@@ -1,10 +1,10 @@
 package org.example.tictactoe;
 
-import org.example.backup.tictactoe.models.exceptions.BotCountException;
-import org.example.backup.tictactoe.models.exceptions.DimensionException;
-import org.example.backup.tictactoe.models.exceptions.DuplicateSymbolException;
-import org.example.backup.tictactoe.models.exceptions.PlayerCountException;
 import org.example.tictactoe.enums.BotDifficultyLevel;
+import org.example.tictactoe.exceptions.BotCountException;
+import org.example.tictactoe.exceptions.DimensionException;
+import org.example.tictactoe.exceptions.DuplicateSymbolException;
+import org.example.tictactoe.exceptions.PlayerCountException;
 import org.example.tictactoe.models.*;
 import org.example.tictactoe.winningStrategies.ColumnWinningStrategy;
 import org.example.tictactoe.winningStrategies.DiagonalWinningStrategy;

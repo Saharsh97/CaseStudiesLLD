@@ -10,14 +10,6 @@ public class Ticket extends BaseModel{
     private Gate generatedAt;
     private Operator generatedBy;
 
-    public Gate getGeneratedAt() {
-        return generatedAt;
-    }
-
-    public void setGeneratedAt(Gate generatedAt) {
-        this.generatedAt = generatedAt;
-    }
-
 
     public String getTicketNumber() {
         return ticketNumber;
@@ -55,6 +47,16 @@ public class Ticket extends BaseModel{
         return generatedBy;
     }
 
+    public void setGeneratedBy(Operator generatedBy) {
+        this.generatedBy = generatedBy;
+    }
 
+    public Gate getGeneratedAt() {
+        return generatedAt;
+    }
+
+    public void setGeneratedAt(Gate generatedAt) {
+        this.generatedAt = generatedAt;
+    }
 
 }

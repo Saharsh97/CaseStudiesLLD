@@ -20,7 +20,8 @@ public class TicketController {
             Ticket ticket = ticketService.issueTicket(
                                     requestDTO.getVehicleNumber(),
                                     requestDTO.getVehicleType(),
-                                    requestDTO.getOwnerName()
+                                    requestDTO.getOwnerName(),
+                                    requestDTO.getGateId()
                             );
 
             responseDTO.setTicketNumber(ticket.getTicketNumber());
@@ -30,7 +31,7 @@ public class TicketController {
         } catch (Exception e){
             responseDTO.setTicketNumber(null);
             responseDTO.setResponseStatus(ResponseStatus.FAILURE);
-            responseDTO.setResponseMessage("Something went wrong");
+            responseDTO.setResponseMessage(e.getMessage());
         }
 
         return responseDTO;
